@@ -7,9 +7,12 @@ namespace Breakout
 {
     class Program
     {
+        public const int ScreenW = 500;
+        public const int ScreenH = 700;
         static void Main(string[] args)
         {
-            using (var window = new RenderWindow(new VideoMode(500, 700), "breakout"))
+            
+            using (var window = new RenderWindow(new VideoMode(ScreenW, ScreenH), "breakout"))
             {
                 window.Closed += (o, e) => window.Close();
                 Clock clock = new Clock();
