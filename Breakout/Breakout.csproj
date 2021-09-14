@@ -1,3 +1,5 @@
+
+
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
@@ -5,4 +7,22 @@
         <TargetFramework>net5.0</TargetFramework>
     </PropertyGroup>
 
+    <ItemGroup>
+      <PackageReference Include="SFML.Net" Version="2.5.0" />
+    </ItemGroup>
+
+
+    <ItemGroup>
+        <None Remove="assets/*.png" />
+        <EmbeddedResource Include="assets/*.png">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </EmbeddedResource>
+    </ItemGroup>
+
+    <ItemGroup>
+        <None Remove="assets/*.ttf" />
+        <EmbeddedResource Include="assets/*.ttf">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </EmbeddedResource>
+    </ItemGroup>
 </Project>
