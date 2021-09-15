@@ -13,13 +13,14 @@ namespace Breakout
         public int Score = 0;
         public Text gui;
         public Vector2f direction = new Vector2f(1, 1) / MathF.Sqrt(2.0f);
+        public int hitCount = 0;
         
 
         public Ball()
         {
             sprite = new Sprite();
             sprite.Texture = new Texture("assets/ball.png");
-            sprite.Position = new Vector2f(250, 300);
+            sprite.Position = new Vector2f(250, 400);
             Vector2f ballTextureSize = (Vector2f) sprite.Texture.Size;
             sprite.Origin = 0.5f * ballTextureSize;
             sprite.Scale = new Vector2f(Diameter / ballTextureSize.X, Diameter / ballTextureSize.Y);
@@ -31,7 +32,7 @@ namespace Breakout
         public void Update(float deltaTime)
         {
             var newPos = sprite.Position;
-            newPos += direction * deltaTime * 1000.0f;
+            newPos += direction * deltaTime * 150.0f;
             sprite.Position = newPos;
             if (newPos.X > Program.ScreenW - Radius)
             {
@@ -42,7 +43,8 @@ namespace Breakout
             {
                 newPos.Y = Program.ScreenH - Radius;
                 Health--;
-                sprite.Position = new Vector2f(250, 300);
+                hitCount = 0;
+                sprite.Position = new Vector2f(250, 400);
                 if (new Random().Next() % 2 == 0)
                 {
                     direction = new Vector2f(1, 1) / MathF.Sqrt(2.0f);

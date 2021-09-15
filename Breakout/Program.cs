@@ -20,6 +20,7 @@ namespace Breakout
                 {
                     Ball ball = new Ball();
                     Paddle paddle = new Paddle();
+                    Tiles tile = new Tiles();
                     while (ball.Health > 0)
                     {
                         float deltaTime = clock.Restart().AsSeconds();
@@ -27,11 +28,13 @@ namespace Breakout
                         //TODO: Updates
                         ball.Update(deltaTime);
                         paddle.Update(deltaTime,ball);
+                        tile.Update(deltaTime, ball);
                         
                         window.Clear(new Color(131, 197, 235));
                         // TODO: Drawing
                         ball.Draw(window);
                         paddle.Draw(window);
+                        tile.Draw(window);
                         window.Display();
                     
                         

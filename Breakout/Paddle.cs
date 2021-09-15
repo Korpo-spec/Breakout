@@ -32,11 +32,21 @@ namespace Breakout
             {
                 newPos.X -= deltaTime * 300.0f;
             } // TODO: Moveback ifoutside
+            
+            if (newPos.X < 0 + (int)size.X /2)
+            {
+                newPos.X = 0 + (int)size.X/2;
+            }
+            else if (newPos.X > Program.ScreenW - (int) size.X / 2)
+            {
+                newPos.X = 0 + Program.ScreenW - (int) size.X / 2;
+            }
             sprite.Position= newPos;
             if (Collision.CircleRectangle(ball.sprite.Position, Ball.Radius, this.sprite.Position, size,
                 out Vector2f hit))
             {
                 ball.sprite.Position += hit;
+                ball.hitCount = 0;
                 ball.Reflect(hit.Normalized());
             }
         }
