@@ -16,19 +16,29 @@ namespace Breakout
             {
                 window.Closed += (o, e) => window.Close();
                 Clock clock = new Clock();
-                Ball ball = new Ball();
                 while (window.IsOpen)
                 {
-                    float deltaTime = clock.Restart().AsSeconds();
-                    window.DispatchEvents(); 
-                    //TODO: Updates
-                    ball.Update(deltaTime);
-                    window.Clear(new Color(131, 197, 235));
-                    // TODO: Drawing
-                    ball.Draw(window);
-                    window.Display();
+                    Ball ball = new Ball();
+                    Paddle paddle = new Paddle();
+                    while (ball.Health > 0)
+                    {
+                        float deltaTime = clock.Restart().AsSeconds();
+                        window.DispatchEvents(); 
+                        //TODO: Updates
+                        ball.Update(deltaTime);
+                        paddle.Update(deltaTime,ball);
+                        
+                        window.Clear(new Color(131, 197, 235));
+                        // TODO: Drawing
+                        ball.Draw(window);
+                        paddle.Draw(window);
+                        window.Display();
                     
+                        
+                    
+                    }
                 }
+                
                 
             }
         }

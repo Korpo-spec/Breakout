@@ -1,7 +1,7 @@
 ﻿using System;
 using SFML.Graphics;
 using SFML.System;
-
+using SFML.Window;
 namespace Breakout
 {
     public class Ball
@@ -9,7 +9,9 @@ namespace Breakout
         public Sprite sprite;
         public const float Diameter = 20.0f;
         public const float Radius = Diameter * 0.5f;
-
+        public int Health = 3;
+        public int Score = 0;
+        public Text gui;
         public Vector2f direction = new Vector2f(1, 1) / MathF.Sqrt(2.0f);
         
 
@@ -21,12 +23,16 @@ namespace Breakout
             Vector2f ballTextureSize = (Vector2f) sprite.Texture.Size;
             sprite.Origin = 0.5f * ballTextureSize;
             sprite.Scale = new Vector2f(Diameter / ballTextureSize.X, Diameter / ballTextureSize.Y);
+            gui = new Text();
+            gui.CharacterSize = 24;
+            gui.Font = new Font("assets/future.ttf");
         }
 
         public void Update(float deltaTime)
         {
             var newPos = sprite.Position;
-            newPos += direction * deltaTime * 100000.0f;
+            newPos += direction * deltaTime * 1000.0f;
+            sprite.Position = newPos;
             if (newPos.X > Program.ScreenW - Radius)
             {
                 newPos.X = Program.ScreenW - Radius;
@@ -35,7 +41,18 @@ namespace Breakout
             else if (newPos.Y > Program.ScreenH - Radius)
             {
                 newPos.Y = Program.ScreenH - Radius;
-                Reflect(new Vector2f(0,-1));
+                Health--;
+                sprite.Position = new Vector2f(250, 300);
+                if (new Random().Next() % 2 == 0)
+                {
+                    direction = new Vector2f(1, 1) / MathF.Sqrt(2.0f);
+                }
+                else
+                {
+                    direction = new Vector2f(-1, 1) / MathF.Sqrt(2.0f);
+
+                }
+
             }
             else if (newPos.X < 0 + Radius)
             {
@@ -47,7 +64,7 @@ namespace Breakout
                 newPos.Y = 0 + Radius;
                 Reflect(new Vector2f(0,1));
             }
-            sprite.Position = newPos;
+            
             
         }
 
@@ -59,6 +76,13 @@ namespace Breakout
         public void Draw(RenderTarget target)
         {
             target.Draw(sprite);
+
+            gui.DisplayedString = $"Health: {Health}";
+            gui.Position = new Vector2f(12, 8);
+            target.Draw(gui);
+            gui.DisplayedString = $"Score: {Score}";
+            gui.Position = new Vector2f(Program.ScreenW - gui.GetGlobalBounds().Width - 12, 8);
+            target.Draw(gui);
         }
     }
 }
