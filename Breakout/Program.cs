@@ -14,6 +14,7 @@ namespace Breakout
             
             using (var window = new RenderWindow(new VideoMode(ScreenW, ScreenH), "breakout"))
             {
+                
                 window.Closed += (o, e) => window.Close();
                 Clock clock = new Clock();
                 while (window.IsOpen)
@@ -21,7 +22,7 @@ namespace Breakout
                     Ball ball = new Ball();
                     Paddle paddle = new Paddle();
                     Tiles tile = new Tiles();
-                    while (ball.Health > 0)
+                    while (ball.Health > 0 && tile.positions.Count > 0)
                     {
                         float deltaTime = clock.Restart().AsSeconds();
                         window.DispatchEvents(); 

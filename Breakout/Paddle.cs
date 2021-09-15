@@ -22,16 +22,33 @@ namespace Breakout
 
         public void Update(float deltaTime, Ball ball)
         {
-            var newPos = sprite.Position;
-            if (Keyboard.IsKeyPressed(Keyboard.Key.Right))
+            
+            if (ball.BallOnPaddle)
             {
-                newPos.X += deltaTime * 300.0f;
+                sprite.Position = new Vector2f(Program.ScreenW * 0.5f, Program.ScreenH - 150);
+                Vector2f temp = sprite.Position;
+                temp.Y -= 20;
+                ball.sprite.Position = temp;
+                
+                
             }
+            var newPos = sprite.Position;
+            
+                if (Keyboard.IsKeyPressed(Keyboard.Key.Right))
+                {
+                    newPos.X += deltaTime * 300.0f;
+                }
 
-            if (Keyboard.IsKeyPressed(Keyboard.Key.Left))
-            {
-                newPos.X -= deltaTime * 300.0f;
-            } // TODO: Moveback ifoutside
+                if (Keyboard.IsKeyPressed(Keyboard.Key.Left))
+                {
+                    newPos.X -= deltaTime * 300.0f;
+                } // TODO: Moveback if outside
+            
+            
+                if (Keyboard.IsKeyPressed(Keyboard.Key.Space))
+                {
+                    ball.BallOnPaddle = false;
+                }
             
             if (newPos.X < 0 + (int)size.X /2)
             {
@@ -41,7 +58,9 @@ namespace Breakout
             {
                 newPos.X = 0 + Program.ScreenW - (int) size.X / 2;
             }
-            sprite.Position= newPos;
+            sprite.Position = newPos;
+            
+           
             if (Collision.CircleRectangle(ball.sprite.Position, Ball.Radius, this.sprite.Position, size,
                 out Vector2f hit))
             {

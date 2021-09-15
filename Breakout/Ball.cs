@@ -29,42 +29,49 @@ namespace Breakout
             gui.Font = new Font("assets/future.ttf");
         }
 
+        public bool BallOnPaddle;
         public void Update(float deltaTime)
         {
-            var newPos = sprite.Position;
-            newPos += direction * deltaTime * 150.0f;
-            sprite.Position = newPos;
-            if (newPos.X > Program.ScreenW - Radius)
+            if (!BallOnPaddle)
             {
-                newPos.X = Program.ScreenW - Radius;
-                Reflect(new Vector2f(-1,0));
-            }
-            else if (newPos.Y > Program.ScreenH - Radius)
-            {
-                newPos.Y = Program.ScreenH - Radius;
-                Health--;
-                hitCount = 0;
-                sprite.Position = new Vector2f(250, 400);
-                if (new Random().Next() % 2 == 0)
+                var newPos = sprite.Position;
+                newPos += direction * deltaTime * 300.0f;
+                sprite.Position = newPos;
+                if (newPos.X > Program.ScreenW - Radius)
                 {
-                    direction = new Vector2f(1, 1) / MathF.Sqrt(2.0f);
+                    newPos.X = Program.ScreenW - Radius;
+                    Reflect(new Vector2f(-1,0));
                 }
-                else
+                else if (newPos.Y > Program.ScreenH - Radius)
                 {
-                    direction = new Vector2f(-1, 1) / MathF.Sqrt(2.0f);
+                    newPos.Y = Program.ScreenH - Radius;
+                    Health--;
+                    hitCount = 0;
+                    sprite.Position = new Vector2f(250, 400);
+                    if (new Random().Next() % 2 == 0)
+                    {
+                        direction = new Vector2f(1, 1) / MathF.Sqrt(2.0f);
+                    }
+                    else
+                    {
+                        direction = new Vector2f(-1, 1) / MathF.Sqrt(2.0f);
+
+                    }
+
+                    BallOnPaddle = true;
 
                 }
+                else if (newPos.X < 0 + Radius)
+                {
+                    newPos.X = 0 + Radius;
+                    Reflect(new Vector2f(1,0));
+                }
+                else if (newPos.Y < 0 + Radius)
+                {
+                    newPos.Y = 0 + Radius;
+                    Reflect(new Vector2f(0,1));
+                }
 
-            }
-            else if (newPos.X < 0 + Radius)
-            {
-                newPos.X = 0 + Radius;
-                Reflect(new Vector2f(1,0));
-            }
-            else if (newPos.Y < 0 + Radius)
-            {
-                newPos.Y = 0 + Radius;
-                Reflect(new Vector2f(0,1));
             }
             
             
