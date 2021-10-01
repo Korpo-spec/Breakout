@@ -20,7 +20,7 @@ namespace Breakout
         {
             sprite = new Sprite();
             sprite.Texture = new Texture("assets/ball.png");
-            sprite.Position = new Vector2f(250, 400);
+            sprite.Position = new Vector2f(250, 350);
             Vector2f ballTextureSize = (Vector2f) sprite.Texture.Size;
             sprite.Origin = 0.5f * ballTextureSize;
             sprite.Scale = new Vector2f(Diameter / ballTextureSize.X, Diameter / ballTextureSize.Y);

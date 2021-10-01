@@ -22,9 +22,12 @@ namespace Breakout
                     Ball ball = new Ball();
                     Paddle paddle = new Paddle();
                     Tiles tile = new Tiles();
+                    ball.BallOnPaddle = true;
                     while (ball.Health > 0 && tile.positions.Count > 0)
                     {
                         float deltaTime = clock.Restart().AsSeconds();
+                        if (deltaTime > 0.05f) deltaTime = 0.05f;
+                        
                         window.DispatchEvents(); 
                         //TODO: Updates
                         ball.Update(deltaTime);
